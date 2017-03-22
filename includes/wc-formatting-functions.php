@@ -536,7 +536,7 @@ function wc_time_format() {
 /**
  * Convert mysql datetime to PHP timestamp, forcing UTC. Wrapper for strtotime.
  *
- * Based on wcs_strtotime_dark_knight() from WC Subscripts by Prospress.
+ * Based on wcs_strtotime_dark_knight() from WC Subscriptions by Prospress.
  *
  * @since  3.0.0
  * @return int
