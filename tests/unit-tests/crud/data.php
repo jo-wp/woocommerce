@@ -7,6 +7,16 @@
 class WC_Tests_CRUD_Data extends WC_Unit_Test_Case {
 
 	/**
+	 * Restore UTC on failire.
+	 */
+	protected function onNotSuccessfulTest() {
+		// @codingStandardsIgnoreStart
+		date_default_timezone_set( 'UTC' );
+		// @codingStandardsIgnoreEnd
+		parent::onNotSuccessfulTest();
+	}
+
+	/**
 	 * Create a test post we can add/test meta against.
 	 */
 	public function create_test_post() {
