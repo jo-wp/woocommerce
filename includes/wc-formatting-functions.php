@@ -534,6 +534,32 @@ function wc_time_format() {
 }
 
 /**
+ * Convert mysql datetime to PHP timestamp, forcing UTC. Wrapper for strtotime.
+ *
+ * Based on wcs_strtotime_dark_knight() from WC Subscripts by Prospress.
+ *
+ * @since  3.0.0
+ * @return int
+ */
+function wc_string_to_timestamp( $time_string, $from_timestamp = null ) {
+	$original_timezone = date_default_timezone_get();
+
+	// @codingStandardsIgnoreStart
+	date_default_timezone_set( 'UTC' );
+
+	if ( null === $from_timestamp ) {
+		$next_timestamp = strtotime( $time_string );
+	} else {
+		$next_timestamp = strtotime( $time_string, $from_timestamp );
+	}
+
+	date_default_timezone_set( $original_timezone );
+	// @codingStandardsIgnoreEnd
+
+	return $next_timestamp;
+}
+
+/**
  * WooCommerce Timezone - helper to retrieve the timezone string for a site until.
  * a WP core method exists (see https://core.trac.wordpress.org/ticket/24730).
  *
