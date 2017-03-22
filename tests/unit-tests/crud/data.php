@@ -13,6 +13,8 @@ class WC_Tests_CRUD_Data extends WC_Unit_Test_Case {
 		// @codingStandardsIgnoreStart
 		date_default_timezone_set( 'UTC' );
 		// @codingStandardsIgnoreEnd
+		update_option( 'gmt_offset', 0 );
+		update_option( 'timezone_string', '' );
 		parent::onNotSuccessfulTest();
 	}
 
@@ -316,6 +318,7 @@ class WC_Tests_CRUD_Data extends WC_Unit_Test_Case {
 
 		// Set date to a string without timezone info. This will be assumed in local timezone and thus should match the offset timestamp.
 		$object->set_date_created( '2017-01-02' );
+		$this->assertEquals( -3600 * 4, $object->get_date_created()->getOffset() );
 		$this->assertEquals( 1483315200 - $object->get_date_created()->getOffset(), $object->get_date_created()->getTimestamp() );
 		$this->assertEquals( 1483315200, $object->get_date_created()->getOffsetTimestamp() );
 		$this->assertEquals( '2017-01-02 00:00:00', $object->get_date_created()->date( 'Y-m-d H:i:s' ) );
