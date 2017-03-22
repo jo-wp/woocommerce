@@ -558,15 +558,15 @@ function wc_timezone_string() {
 	$utc_offset *= 3600;
 
 	// attempt to guess the timezone string from the UTC offset
-	$timezone = timezone_name_from_abbr( '', $utc_offset, 0 );
+	$timezone = timezone_name_from_abbr( '', $utc_offset );
 
 	// last try, guess timezone string manually
 	if ( false === $timezone ) {
-		$is_dst = date( 'I' );
+		$is_dst = (bool) date( 'I' );
 
 		foreach ( timezone_abbreviations_list() as $abbr ) {
 			foreach ( $abbr as $city ) {
-				if ( $city['dst'] == $is_dst && $city['offset'] == $utc_offset ) {
+				if ( (bool) $city['dst'] === $is_dst && $city['offset'] == $utc_offset ) {
 					return $city['timezone_id'];
 				}
 			}
