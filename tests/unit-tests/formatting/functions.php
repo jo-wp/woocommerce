@@ -533,13 +533,8 @@ class WC_Tests_Formatting_Functions extends WC_Unit_Test_Case {
 
 		// test with manually set UTC offset
 		update_option( 'gmt_offset', -4 );
-		$is_dst = (bool) date( 'I' );
-
-		if ( $is_dst ) {
-			$this->assertEquals( 'America/Halifax', wc_timezone_string() );
-		} else {
-			$this->assertEquals( 'America/Boa_Vista', wc_timezone_string() );
-		}
+		$timezone = new DateTimeZone( wc_timezone_string() );
+		$this->assertEquals( -14400, $timezone->getOffset( new DateTime( "now", new DateTimeZone( 'UTC' ) ) ) );
 
 		// test with invalid offset
 		update_option( 'gmt_offset', 99 );

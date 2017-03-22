@@ -557,17 +557,16 @@ function wc_timezone_string() {
 	// adjust UTC offset from hours to seconds
 	$utc_offset *= 3600;
 
-	// Detect DST.
-	$is_dst = (bool) date( 'I' );
-
 	// attempt to guess the timezone string from the UTC offset
-	$timezone = timezone_name_from_abbr( '', $utc_offset, $is_dst );
+	$timezone = timezone_name_from_abbr( '', $utc_offset );
 
 	// last try, guess timezone string manually
 	if ( false === $timezone ) {
+		$is_dst = "1" === date( 'I' );
+
 		foreach ( timezone_abbreviations_list() as $abbr ) {
 			foreach ( $abbr as $city ) {
-				if ( (bool) $city['dst'] === $is_dst && $city['offset'] == $utc_offset ) {
+				if ( (bool) $city['dst'] === $is_dst && $city['offset'] === $utc_offset ) {
 					return $city['timezone_id'];
 				}
 			}
