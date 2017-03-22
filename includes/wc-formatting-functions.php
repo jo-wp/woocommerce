@@ -588,7 +588,7 @@ function wc_timezone_string() {
 
 	// last try, guess timezone string manually
 	if ( false === $timezone ) {
-		$is_dst = "1" === date( 'I' );
+		$is_dst = '1' === date( 'I' );
 
 		foreach ( timezone_abbreviations_list() as $abbr ) {
 			foreach ( $abbr as $city ) {
